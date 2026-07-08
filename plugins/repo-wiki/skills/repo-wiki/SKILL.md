@@ -68,12 +68,18 @@ call external APIs or require keys.
    the user to run `/repo-wiki:generate` and stop. Manifest found but
    unparseable or missing required fields → offer a full regeneration; do not
    guess at repairs.
-2. **Diff.** Run `git diff --name-status <manifest.commit>..HEAD`.
-   - Empty output → report "wiki is up to date as of <commit>" and stop.
-   - `manifest.commit` is `null`, or unreachable (`git cat-file -e <sha>`
-     fails): try `git merge-base HEAD <sha>` and diff against that; if that
-     also fails, confirm with the user, then run the generate workflow as a
-     full regeneration, preserving the manifest's `outputDir` and `convention`.
+2. **Diff.**
+   - `manifest.commit` is `null` (generated outside git) → no diff is
+     possible: confirm with the user, then run the generate workflow as a
+     full regeneration, preserving the manifest's `outputDir` and
+     `convention`.
+   - Otherwise pick the diff base: if `git merge-base --is-ancestor
+     <manifest.commit> HEAD` succeeds, the base is `manifest.commit`. If it
+     fails (history rewritten by rebase/squash, or the commit is gone), try
+     `git merge-base HEAD <manifest.commit>` as the base; if that also
+     fails, confirm with the user and run a full regeneration as above.
+   - Run `git diff --name-status <base>..HEAD`. Empty output → report "wiki
+     is up to date as of <base>" and stop.
 3. **Map stale pages.** A page is stale if any changed file matches any of its
    `sources` globs. Skip `index.md` here — its `["*"]` is structural, per the
    manifest schema. Changed files matching no page → apply the coverage-gap
