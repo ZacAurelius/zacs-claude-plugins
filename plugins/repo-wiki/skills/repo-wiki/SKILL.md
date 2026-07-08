@@ -78,8 +78,14 @@ call external APIs or require keys.
      fails (history rewritten by rebase/squash, or the commit is gone), try
      `git merge-base HEAD <manifest.commit>` as the base; if that also
      fails, confirm with the user and run a full regeneration as above.
-   - Run `git diff --name-status <base>..HEAD`. Empty output → report "wiki
-     is up to date as of <base>" and stop.
+   - Run `git diff --name-status <base>..HEAD`, then drop any paths under
+     `outputDir` and the reference-block files (`CLAUDE.md`, `AGENTS.md`) —
+     the wiki's own output and reference block are never a source change,
+     even though they are ordinary tracked files that can legitimately show
+     up in this diff (e.g. the first commit made after a generate run, which
+     typically bundles the newly-created wiki output alongside unrelated
+     source edits). Empty output after filtering → report "wiki is up to
+     date as of <base>" and stop.
 3. **Map stale pages.** A page is stale if any changed file matches any of its
    `sources` globs. Skip `index.md` here — its `["*"]` is structural, per the
    manifest schema. Changed files matching no page → apply the coverage-gap

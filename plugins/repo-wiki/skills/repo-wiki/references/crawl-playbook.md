@@ -7,8 +7,10 @@ before any crawl (generate mode) or re-crawl (update mode).
 
 Count tracked source files: run `git ls-files` and count lines, excluding
 vendored/generated content: `node_modules/`, `dist/`, `build/`, `out/`,
-`vendor/`, `target/`, lockfiles, minified assets (`*.min.*`), binaries, and
-generated code. For non-git repos, use Glob with the same exclusions.
+`vendor/`, `target/`, lockfiles, minified assets (`*.min.*`), binaries,
+generated code, and the wiki's own `outputDir` (it documents the repo — it is
+never itself a documentation subject). For non-git repos, use Glob with the
+same exclusions.
 
 - **≤ 150 source files → single-pass** (section 5): the main session reads
   directly.
