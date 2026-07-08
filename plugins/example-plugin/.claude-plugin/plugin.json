@@ -1,0 +1,11 @@
+{
+  "name": "example-plugin",
+  "version": "0.1.0",
+  "description": "Starter example plugin demonstrating a basic command",
+  "author": {
+    "name": "Zac Aurelius",
+    "email": "zacaurelius@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["example", "starter"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "zacs-claude-plugins",
+  "owner": {
+    "name": "Zac Aurelius",
+    "email": "zacaurelius@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "example-plugin",
+      "source": "./plugins/example-plugin",
+      "description": "Starter example plugin demonstrating a basic command"
+    }
+  ]
+}
