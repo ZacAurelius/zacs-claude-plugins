@@ -1,0 +1,11 @@
+{
+  "name": "repo-wiki",
+  "version": "0.1.0",
+  "description": "Generate and incrementally maintain a documentation wiki for any repository, entirely inside your Claude Code session (OpenWiki-style, no extra API key)",
+  "author": {
+    "name": "Zac Aurelius",
+    "email": "zacaurelius@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": ["documentation", "wiki", "docs", "codebase", "openwiki"]
+}

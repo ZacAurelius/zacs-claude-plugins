@@ -9,6 +9,11 @@
       "name": "example-plugin",
       "source": "./plugins/example-plugin",
       "description": "Starter example plugin demonstrating a basic command"
+    },
+    {
+      "name": "repo-wiki",
+      "source": "./plugins/repo-wiki",
+      "description": "Generate and incrementally maintain a repo documentation wiki inside your Claude Code session (OpenWiki-style, no extra API key)"
     }
   ]
 }
