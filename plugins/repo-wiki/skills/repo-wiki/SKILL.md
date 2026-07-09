@@ -72,7 +72,8 @@ call external APIs or require keys.
    - `manifest.commit` is `null` (generated outside git) → no diff is
      possible: confirm with the user, then run the generate workflow as a
      full regeneration, preserving the manifest's `outputDir` and
-     `convention`.
+     `convention` (confirmation already obtained — skip the generate
+     workflow's step-2 re-confirmation).
    - Otherwise pick the diff base: if `git merge-base --is-ancestor
      <manifest.commit> HEAD` succeeds, the base is `manifest.commit`. If it
      fails (history rewritten by rebase/squash, or the commit is gone), try
