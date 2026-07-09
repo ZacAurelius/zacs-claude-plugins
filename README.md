@@ -19,7 +19,6 @@ Then install any plugin:
 | Plugin | What it does |
 |---|---|
 | [repo-wiki](plugins/repo-wiki/) | Generates and maintains a documentation wiki for any repo, entirely inside your Claude Code session — OpenWiki-style, no extra API key. `/repo-wiki:generate`, `/repo-wiki:update`. |
-| [example-plugin](plugins/example-plugin/) | Starter example demonstrating a basic command. |
 
 ### Featured: repo-wiki
 
