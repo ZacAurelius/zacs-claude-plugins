@@ -77,10 +77,13 @@ call external APIs or require keys.
      <manifest.commit> HEAD` succeeds, the base is `manifest.commit`. If it
      fails (history rewritten by rebase/squash, or the commit is gone), try
      `git merge-base HEAD <manifest.commit>` as the base; if that also
-     fails, confirm with the user and run a full regeneration as above.
+     fails, confirm with the user and run a full regeneration as above
+     (confirmation already obtained — skip the generate workflow's step-2
+     re-confirmation).
    - Run `git diff --name-status <base>..HEAD`, then drop any paths under
-     `outputDir` and the reference-block files (`CLAUDE.md`, `AGENTS.md`) —
-     the wiki's own output and reference block are never a source change,
+     `outputDir` and the root-level reference-block files the plugin writes
+     (`CLAUDE.md`, `AGENTS.md`) — the wiki's own output and reference block
+     are never a source change,
      even though they are ordinary tracked files that can legitimately show
      up in this diff (e.g. the first commit made after a generate run, which
      typically bundles the newly-created wiki output alongside unrelated

@@ -21,7 +21,9 @@ same exclusions.
 ## 2. Partition into areas (fan-out path)
 
 - Partition by top-level directory of the source tree (e.g. `src/auth/`,
-  `src/api/`, or top-level `packages/*` in monorepos).
+  `src/api/`, or top-level `packages/*` in monorepos), applying the same
+  exclusions as section 1 (vendored/generated content and the wiki's own
+  `outputDir`).
 - Merge directories with fewer than 5 files into a single "misc" area.
 - Aim for 3–10 areas. If a single directory dominates (> 60% of files), split
   it one level deeper.
@@ -81,12 +83,19 @@ per logical area.
 
 ## 6. Coverage-gap rule (update mode)
 
-A changed file that matches no page's `sources` is a coverage gap:
+A changed file that matches no page's `sources` is a coverage gap. Resolve it
+by comparing the file's path against the directory roots of each page's
+`sources` globs (a glob's root is its path up to the first wildcard, e.g.
+`src/auth/**` → `src/auth/`):
 
-- If the file shares a top-level directory with an existing page's sources →
-  extend that page and widen its `sources` globs to include the file.
-- Otherwise → create a new page using the area-page template, with `sources`
-  covering the file's directory.
+- If exactly one page's glob root is a prefix of the changed file's path,
+  extend that page and widen its `sources` to include the file.
+- If several pages qualify, extend the page with the longest matching glob
+  root (the most specific area).
+- If no glob root matches — or the only shared path is the repo root or a
+  container directory that holds multiple areas (`src/`, `packages/`,
+  `apps/`, `lib/`) — create a new page using the area-page template, with
+  `sources` covering the file's own directory.
 
 ## 7. Failure handling
 

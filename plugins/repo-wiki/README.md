@@ -21,8 +21,8 @@ Natural language works too: "document this repo", "refresh the wiki".
 - A short marker-delimited reference block is appended to `CLAUDE.md` (and
   `AGENTS.md` if present) so future agent sessions discover the wiki without
   loading it into context.
-- `update` diffs `HEAD` against the manifest commit and regenerates only stale
-  pages.
+- `update` diffs `HEAD` against the last-generated commit (or a merge-base
+  fallback when history was rewritten) and regenerates only stale pages.
 
 ## State
 

@@ -69,7 +69,7 @@ plugins/repo-wiki/
 
 1. **Locate manifest** (same discovery as above). None found → tell the user to run `/repo-wiki:generate`.
 2. **Diff:** `git diff --name-status <manifest.commit>..HEAD`. Empty diff → no-op; say so and stop.
-3. **Stale mapping:** Map each changed file to pages via per-page `sources` globs. A changed file matching no page is a coverage gap. Rule: if the file shares a top-level directory with an existing page's sources, extend that page (and widen its `sources`); otherwise create a new page. This rule is restated in `crawl-playbook.md`.
+3. **Stale mapping:** Map each changed file to pages via per-page `sources` globs. A changed file matching no page is a coverage gap. Rule: compare the file's path against the directory roots of each page's `sources` globs; extend the page with the longest matching glob root, or create a new page when no root matches or the file only shares the repo root / a container directory (`src/`, `packages/`). The full rule lives in `crawl-playbook.md`.
 4. **Regenerate stale pages only.** Re-crawl only affected areas (subagents if the area is large). Deleted sources → prune or edit affected pages. If the page set changed, rewrite `index.md`.
 5. **Persist:** Update manifest `commit`, source maps, run log. Refresh the reference block via markers (idempotent).
 6. **Edge — unreachable SHA** (rebase/squash rewrote history): fall back to `git merge-base` with HEAD; if that fails too, confirm with the user, then full regeneration.
@@ -117,7 +117,7 @@ All per-repo state lives here — output-dir choice, convention decision, source
 ## Error handling
 
 - **Not a git repo:** warn, generate anyway, `commit: null`, updates always full-regen.
-- **Dirty working tree at generate:** proceed; record HEAD and note in the run log that uncommitted files were included.
+- **Dirty working tree at generate:** proceed; record HEAD and note in the final report that uncommitted files were included.
 - **Corrupt or invalid manifest:** offer full regeneration.
 - **Pre-existing marker block from an older run:** replace between markers; never duplicate.
 - **Pre-existing docs at the target dir not created by this plugin:** never overwrite without explicit confirmation.
